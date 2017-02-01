@@ -9,22 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var hero_1 = require('./hero');
-var HeroDetailComponent = (function () {
-    function HeroDetailComponent() {
+var health_check_summary_1 = require('./health-check-summary');
+var health_check_detail_1 = require("./health-check-detail");
+var HealthCheckComponent = (function () {
+    function HealthCheckComponent() {
     }
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', hero_1.Hero)
-    ], HeroDetailComponent.prototype, "hero", void 0);
-    HeroDetailComponent = __decorate([
+        __metadata('design:type', health_check_summary_1.HealthCheckSummary)
+    ], HealthCheckComponent.prototype, "healthCheckSummary", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', health_check_detail_1.HealthCheckDetail)
+    ], HealthCheckComponent.prototype, "selectedHealthCheckDetail", void 0);
+    HealthCheckComponent = __decorate([
         core_1.Component({
-            selector: 'my-hero-detail',
-            templateUrl: 'app/heroes/hero.view.html'
+            selector: 'config',
+            templateUrl: '/app/config/health-check-config.view.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], HeroDetailComponent);
-    return HeroDetailComponent;
+    ], HealthCheckComponent);
+    return HealthCheckComponent;
 }());
-exports.HeroDetailComponent = HeroDetailComponent;
-//# sourceMappingURL=hero-detail.component.js.map
+exports.HealthCheckComponent = HealthCheckComponent;
+//# sourceMappingURL=health-check.component.js.map

@@ -5,9 +5,8 @@ import {AppComponent}  from './app.component';
 
 import {HttpModule}    from '@angular/http';
 
-import {HeroDetailComponent} from "./heroes/hero-detail.component";
-
-import {HealthCheckComponent} from './healthCheck/health-check.component';
+import {HealthCheckComponent} from './config/health-check.component';
+import {HealthCheckDetailComponent} from "./healthCheckConfig/health-check-config-details.component";
 
 @NgModule({
     imports: [
@@ -17,8 +16,8 @@ import {HealthCheckComponent} from './healthCheck/health-check.component';
     ],
     declarations: [
         AppComponent,
-        HeroDetailComponent,
-        HealthCheckComponent
+        HealthCheckComponent,
+        HealthCheckDetailComponent
     ],
     bootstrap: [AppComponent]
 })

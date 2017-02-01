@@ -1,7 +1,7 @@
-import {IHealthCheckSummary} from "../../models/IHealthCheck";
+//import {IHealthCheckSummary} from "../../models/IHealthCheck";
 
-export class HealthCheckSummary implements IHealthCheckSummary {
-
+export class HealthCheckSummary //implements IHealthCheckSummary {
+{
     id: string;
     name: string;
     uri: string;

@@ -1,55 +1,39 @@
 import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 
-import {Hero} from './heroes/hero';
-import {HeroDetailComponent} from './heroes/hero-detail.component';
-import {HeroService} from './heroes/hero.service';
+import {HealthCheckConfigService} from './healthCheckConfig/health-check-config.service';
+import {HealthCheckConfig} from "./models/health-check-config.model";
 
-//CDN Service
-import {HealthCheckSummary} from './healthCheck/health-check-summary';
-import {HealthCheckDetail} from './healthCheck/health-check-detail';
-import {HealthCheckComponent} from './healthCheck/health-check.component';
-import {HealthCheckService} from './healthCheck/health-check.service';
 
 @Component({
-    selector: 'APIHealthCheck',
+    selector: 'HealthCheck',
     templateUrl: 'app/app.view.html',
     styleUrls: ['app/app.styles.css'],
-    providers: [HeroService, HealthCheckService]
+    providers: [HealthCheckConfigService]
 })
 export class AppComponent implements OnInit {
-    constructor(private heroService: HeroService, private healthCheckService: HealthCheckService) {
+
+    constructor(private healthCheckConfigService: HealthCheckConfigService) {
     }
 
     ngOnInit(): void {
-        //this.getHeroes();
-        this.getHealthCheckSummary();
-        this.getHealthCheckDetail();
+        this.getConfig();
     }
 
-    healthCheckSummary: HealthCheckSummary;
+    title = 'Health Check';
 
-    selectHealthSummary(summary: HealthCheckSummary): void {
-        this.healthCheckService.getHealthCheckDetailByID(summary.id)
+    healthCheckConfigs: HealthCheckConfig[];
+    selectedHealthCheckConfig: HealthCheckConfig;
+
+    getConfig(): void {
+        this.healthCheckConfigService.getHealthCheckConfig()
             .then(data => {
+                //this.healthCheckSummarys = data;
+                //this.setHealthCheckClass();
+                this.healthCheckConfigs = data;
 
-                this.selectedHealthCheckDetail = data;
-                if (this.selectedHealthCheckDetail.statusHistory) {
-                    this.setHealthCheckDetailStatus();
-                }
-            })
-            .catch((ex) => {
-                //Example console.log
-                console.log('Error fetching summary data:', ex);
-            });
-        //this.healthCheckSummary = summary;
-    }
-
-    getHealthCheckSummary(): void {
-        this.healthCheckService.getHealthCheckSummary()
-            .then(data => {
-                this.healthCheckSummarys = data;
-                this.setHealthCheckClass();
+                //TODO: remove after testing.
+                this.selectHealthCheckConfig(this.healthCheckConfigs[0]);
             })
             .catch((ex) => {
                 //Example console.log
@@ -57,104 +41,81 @@ export class AppComponent implements OnInit {
             });
     }
 
-    setHealthCheckClass(): void {
-
-        let listHCS: HealthCheckSummary[] = [];
-
-        for (let i = 0; i < this.healthCheckSummarys.length; i++) {
-
-            listHCS[i] = new HealthCheckSummary(this.healthCheckSummarys[i]);
-
-            switch (this.healthCheckSummarys[i].currentStatus) {
-                case 'operational':
-                    this.healthCheckSummarys[i].icon = 'images/success.png';
-                    this.healthCheckSummarys[i].rowStatus = 'success';
-                    break;
-                case 'degraded':
-                    this.healthCheckSummarys[i].icon = 'images/warning.png';
-                    this.healthCheckSummarys[i].rowStatus = 'warning';
-                    break;
-                case 'unknown':
-                    this.healthCheckSummarys[i].icon = 'images/info.png';
-                    this.healthCheckSummarys[i].rowStatus = 'info';
-                    break;
-                default:
-                    this.healthCheckSummarys[i].icon = 'images/error.png';
-                    this.healthCheckSummarys[i].rowStatus = 'danger';
-                    break;
-            }
-
-        }
-
-        console.log(listHCS[1].greet());
-    }
-
-    setHealthCheckDetailStatus(): void {
-        for (let i = 0; i < this.selectedHealthCheckDetail.statusHistory.length; i++) {
-            switch (this.selectedHealthCheckDetail.statusHistory[i].status) {
-                case 'operational':
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/success.png';
-                    break;
-                case 'degraded':
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/warning.png';
-                    break;
-                case 'unknown':
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/info.png';
-                    break;
-                default:
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/error.png';
-                    break;
-            }
-        }
-    }
-
-    getHealthCheckDetail(): void {
-        this.healthCheckService.getHealthCheckDetail()
-            .then(data => {
-                //console.log('detail data: ');
-                //console.log(data);
-                this.healthCheckDetails = data
-            })
-            .catch((ex) => {
-                //Example console.log
-                console.log('Error fetching Health Check Detail data:', ex);
-            });
-    }
-
-    getHeroes(): void {
-
-        //async call:
-        this.heroService.getHeroes()
-            .then(heroes => this.heroes = heroes)
-            .catch((ex) => {
-                //example console.error
-                console.error('Error fetching heroes:', ex);
-            });
-        //sync call:
-        var abcd = this.heroService.getStr();
-
+    selectHealthCheckConfig(healthCheckConfig: HealthCheckConfig): void {
         /*
-         //slow async:
-         this.heroService.getHeroesSlowly()
-         .then(heroes => this.slowHeroes = heroes)
-         .catch(ex => console.log('Error hero service slow: ' + ex));
+         this.healthCheckConfigService.getHealthCheckConfigByID(healthCheckConfig.configID)
+         .then(data => {
+         this.selectedHealthCheckConfig = data;
+         console.log(this.selectedHealthCheckConfig);
+         })
+         .catch((ex) => {
+         //Example console.log
+         console.log('Error fetching summary data:', ex);
+         });
          */
+        this.selectedHealthCheckConfig = healthCheckConfig;
+
     }
 
-    title = 'Tour of Heroes';
+    /*
+     setHealthCheckClass(): void {
 
-    healthCheckDetails: HealthCheckDetail[];
-    healthCheckSummarys: HealthCheckSummary[];
+     let listHCS: HealthCheckSummary[] = [];
 
-    selectedHealthCheckDetail: HealthCheckDetail;
+     for (let i = 0; i < this.healthCheckSummarys.length; i++) {
 
+     listHCS[i] = new HealthCheckSummary(this.healthCheckSummarys[i]);
 
-    heroes: Hero[];
-    slowHeroes: Hero[];
-    selectedHero: Hero;
+     switch (this.healthCheckSummarys[i].currentStatus) {
+     case 'operational':
+     this.healthCheckSummarys[i].icon = 'images/success.png';
+     this.healthCheckSummarys[i].rowStatus = 'success';
+     break;
+     case 'degraded':
+     this.healthCheckSummarys[i].icon = 'images/warning.png';
+     this.healthCheckSummarys[i].rowStatus = 'warning';
+     break;
+     case 'unknown':
+     this.healthCheckSummarys[i].icon = 'images/info.png';
+     this.healthCheckSummarys[i].rowStatus = 'info';
+     break;
+     default:
+     this.healthCheckSummarys[i].icon = 'images/error.png';
+     this.healthCheckSummarys[i].rowStatus = 'danger';
+     break;
+     }
 
-    onSelect(hero: Hero): void {
-        this.selectedHero = hero;
-    }
+     }
+
+     console.log(listHCS[1].greet());
+     }
+
+     setHealthCheckDetailStatus(): void {
+     for (let i = 0; i < this.selectedHealthCheckDetail.statusHistory.length; i++) {
+     switch (this.selectedHealthCheckDetail.statusHistory[i].status) {
+     case 'operational':
+     this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/success.png';
+     break;
+     case 'degraded':
+     this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/warning.png';
+     break;
+     case 'unknown':
+     this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/info.png';
+     break;
+     default:
+     this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/error.png';
+     break;
+     }
+     }
+     }
+     */
+
+    //healthCheckSummary: HealthCheckSummary;
+
+    //healthCheckDetails: HealthCheckDetail[];
+    //healthCheckSummarys: HealthCheckSummary[];
+
+    //selectedHealthCheckDetail: HealthCheckDetail;
+
 
 }

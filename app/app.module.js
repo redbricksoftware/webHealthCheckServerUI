@@ -13,8 +13,8 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
 var http_1 = require('@angular/http');
-var hero_detail_component_1 = require("./heroes/hero-detail.component");
-var health_check_component_1 = require('./healthCheck/health-check.component');
+var health_check_component_1 = require('./config/health-check.component');
+var health_check_config_details_component_1 = require("./healthCheckConfig/health-check-config-details.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -27,8 +27,8 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
-                hero_detail_component_1.HeroDetailComponent,
-                health_check_component_1.HealthCheckComponent
+                health_check_component_1.HealthCheckComponent,
+                health_check_config_details_component_1.HealthCheckDetailComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

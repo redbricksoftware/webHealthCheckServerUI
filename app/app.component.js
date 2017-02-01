@@ -9,133 +9,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var hero_service_1 = require('./heroes/hero.service');
-//CDN Service
-var health_check_summary_1 = require('./healthCheck/health-check-summary');
-var health_check_service_1 = require('./healthCheck/health-check.service');
+var health_check_config_service_1 = require('./healthCheckConfig/health-check-config.service');
 var AppComponent = (function () {
-    function AppComponent(heroService, healthCheckService) {
-        this.heroService = heroService;
-        this.healthCheckService = healthCheckService;
-        this.title = 'Tour of Heroes';
+    function AppComponent(healthCheckConfigService) {
+        this.healthCheckConfigService = healthCheckConfigService;
+        this.title = 'Health Check';
     }
     AppComponent.prototype.ngOnInit = function () {
-        //this.getHeroes();
-        this.getHealthCheckSummary();
-        this.getHealthCheckDetail();
+        this.getConfig();
     };
-    AppComponent.prototype.selectHealthSummary = function (summary) {
+    AppComponent.prototype.getConfig = function () {
         var _this = this;
-        this.healthCheckService.getHealthCheckDetailByID(summary.id)
+        this.healthCheckConfigService.getHealthCheckConfig()
             .then(function (data) {
-            _this.selectedHealthCheckDetail = data;
-            if (_this.selectedHealthCheckDetail.statusHistory) {
-                _this.setHealthCheckDetailStatus();
-            }
-        })
-            .catch(function (ex) {
-            //Example console.log
-            console.log('Error fetching summary data:', ex);
-        });
-        //this.healthCheckSummary = summary;
-    };
-    AppComponent.prototype.getHealthCheckSummary = function () {
-        var _this = this;
-        this.healthCheckService.getHealthCheckSummary()
-            .then(function (data) {
-            _this.healthCheckSummarys = data;
-            _this.setHealthCheckClass();
+            //this.healthCheckSummarys = data;
+            //this.setHealthCheckClass();
+            _this.healthCheckConfigs = data;
+            //TODO: remove after testing.
+            _this.selectHealthCheckConfig(_this.healthCheckConfigs[0]);
         })
             .catch(function (ex) {
             //Example console.log
             console.log('Error fetching summary data:', ex);
         });
     };
-    AppComponent.prototype.setHealthCheckClass = function () {
-        var listHCS = [];
-        for (var i = 0; i < this.healthCheckSummarys.length; i++) {
-            listHCS[i] = new health_check_summary_1.HealthCheckSummary(this.healthCheckSummarys[i]);
-            switch (this.healthCheckSummarys[i].currentStatus) {
-                case 'operational':
-                    this.healthCheckSummarys[i].icon = 'images/success.png';
-                    this.healthCheckSummarys[i].rowStatus = 'success';
-                    break;
-                case 'degraded':
-                    this.healthCheckSummarys[i].icon = 'images/warning.png';
-                    this.healthCheckSummarys[i].rowStatus = 'warning';
-                    break;
-                case 'unknown':
-                    this.healthCheckSummarys[i].icon = 'images/info.png';
-                    this.healthCheckSummarys[i].rowStatus = 'info';
-                    break;
-                default:
-                    this.healthCheckSummarys[i].icon = 'images/error.png';
-                    this.healthCheckSummarys[i].rowStatus = 'danger';
-                    break;
-            }
-        }
-        console.log(listHCS[1].greet());
-    };
-    AppComponent.prototype.setHealthCheckDetailStatus = function () {
-        for (var i = 0; i < this.selectedHealthCheckDetail.statusHistory.length; i++) {
-            switch (this.selectedHealthCheckDetail.statusHistory[i].status) {
-                case 'operational':
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/success.png';
-                    break;
-                case 'degraded':
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/warning.png';
-                    break;
-                case 'unknown':
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/info.png';
-                    break;
-                default:
-                    this.selectedHealthCheckDetail.statusHistory[i].icon = 'images/error.png';
-                    break;
-            }
-        }
-    };
-    AppComponent.prototype.getHealthCheckDetail = function () {
-        var _this = this;
-        this.healthCheckService.getHealthCheckDetail()
-            .then(function (data) {
-            //console.log('detail data: ');
-            //console.log(data);
-            _this.healthCheckDetails = data;
-        })
-            .catch(function (ex) {
-            //Example console.log
-            console.log('Error fetching Health Check Detail data:', ex);
-        });
-    };
-    AppComponent.prototype.getHeroes = function () {
-        var _this = this;
-        //async call:
-        this.heroService.getHeroes()
-            .then(function (heroes) { return _this.heroes = heroes; })
-            .catch(function (ex) {
-            //example console.error
-            console.error('Error fetching heroes:', ex);
-        });
-        //sync call:
-        var abcd = this.heroService.getStr();
+    AppComponent.prototype.selectHealthCheckConfig = function (healthCheckConfig) {
         /*
-         //slow async:
-         this.heroService.getHeroesSlowly()
-         .then(heroes => this.slowHeroes = heroes)
-         .catch(ex => console.log('Error hero service slow: ' + ex));
+         this.healthCheckConfigService.getHealthCheckConfigByID(healthCheckConfig.configID)
+         .then(data => {
+         this.selectedHealthCheckConfig = data;
+         console.log(this.selectedHealthCheckConfig);
+         })
+         .catch((ex) => {
+         //Example console.log
+         console.log('Error fetching summary data:', ex);
+         });
          */
-    };
-    AppComponent.prototype.onSelect = function (hero) {
-        this.selectedHero = hero;
+        this.selectedHealthCheckConfig = healthCheckConfig;
     };
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'APIHealthCheck',
+            selector: 'HealthCheck',
             templateUrl: 'app/app.view.html',
             styleUrls: ['app/app.styles.css'],
-            providers: [hero_service_1.HeroService, health_check_service_1.HealthCheckService]
+            providers: [health_check_config_service_1.HealthCheckConfigService]
         }), 
-        __metadata('design:paramtypes', [hero_service_1.HeroService, health_check_service_1.HealthCheckService])
+        __metadata('design:paramtypes', [health_check_config_service_1.HealthCheckConfigService])
     ], AppComponent);
     return AppComponent;
 }());
