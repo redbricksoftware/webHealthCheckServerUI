@@ -10,11 +10,16 @@ import {OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
+    routesEnabled: Object;
 
     constructor() {
     }
 
     ngOnInit(): void {
+        this.routesEnabled = {
+            'config': true,
+            'summary': true
+        };
     }
 
 }

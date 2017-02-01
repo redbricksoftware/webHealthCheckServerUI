@@ -11,34 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var HealthCheckStatusSummaryDailyService = (function () {
-    function HealthCheckStatusSummaryDailyService(http) {
+var HealthCheckStatusService = (function () {
+    function HealthCheckStatusService(http) {
         this.http = http;
         this.healthCheckURI = 'http://localhost:3000/api/v1/'; // URL to web api
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
     }
-    HealthCheckStatusSummaryDailyService.prototype.getHealthCheckConfig = function () {
+    HealthCheckStatusService.prototype.getHealthCheckStatusSummaryDaily = function () {
         return this.http.get(this.healthCheckURI + 'HealthCheckSummaryDaily')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HealthCheckStatusSummaryDailyService.prototype.getHealthCheckConfigByID = function (id) {
-        return this.http.get(this.healthCheckURI + 'HealthCheckSummaryDaily/' + id)
+    HealthCheckStatusService.prototype.getHealthCheckStatusDetailByID = function (id) {
+        return this.http.get(this.healthCheckURI + 'HealthCheckDetails/' + id)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HealthCheckStatusSummaryDailyService.prototype.handleError = function (error) {
+    HealthCheckStatusService.prototype.handleError = function (error) {
         //console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
-    return HealthCheckStatusSummaryDailyService;
+    return HealthCheckStatusService;
 }());
-HealthCheckStatusSummaryDailyService = __decorate([
+HealthCheckStatusService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], HealthCheckStatusSummaryDailyService);
-exports.HealthCheckStatusSummaryDailyService = HealthCheckStatusSummaryDailyService;
-//# sourceMappingURL=health-check-status-summary-daily.service.js.map
+], HealthCheckStatusService);
+exports.HealthCheckStatusService = HealthCheckStatusService;
+//# sourceMappingURL=health-check-status.service.js.map

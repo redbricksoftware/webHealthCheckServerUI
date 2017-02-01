@@ -9,10 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var health_check_status_summary_daily_service_1 = require("./health-check-status-summary-daily.service");
+var health_check_status_service_1 = require("./health-check-status.service");
 var HealthCheckStatusSummaryDailyComponent = (function () {
-    function HealthCheckStatusSummaryDailyComponent(healthCheckStatusSummaryDailyService) {
-        this.healthCheckStatusSummaryDailyService = healthCheckStatusSummaryDailyService;
+    function HealthCheckStatusSummaryDailyComponent(healthCheckStatusService) {
+        this.healthCheckStatusService = healthCheckStatusService;
         this.title = 'Health Check';
     }
     HealthCheckStatusSummaryDailyComponent.prototype.ngOnInit = function () {
@@ -20,22 +20,40 @@ var HealthCheckStatusSummaryDailyComponent = (function () {
     };
     HealthCheckStatusSummaryDailyComponent.prototype.getConfig = function () {
         var _this = this;
-        this.healthCheckStatusSummaryDailyService.getHealthCheckConfig()
+        this.healthCheckStatusService.getHealthCheckStatusSummaryDaily()
             .then(function (data) {
             //this.healthCheckSummarys = data;
             //this.setHealthCheckClass();
             _this.healthCheckStatusSummaryDailys = data;
             console.log(data);
             //TODO: remove after testing.
-            _this.selectHealthCheckConfig(_this.healthCheckStatusSummaryDailys[0]);
+            //this.selecthealthCheckStatusSummaryDaily(this.healthCheckStatusSummaryDailys[0]);
         })
             .catch(function (ex) {
             //Example console.log
             console.log('Error fetching summary data:', ex);
         });
     };
-    HealthCheckStatusSummaryDailyComponent.prototype.selectHealthCheckConfig = function (healthCheckStatusSummaryDaily) {
-        this.selectedHealthCheckStatusSummaryDaily = healthCheckStatusSummaryDaily;
+    HealthCheckStatusSummaryDailyComponent.prototype.selecthealthCheckStatusSummaryDaily = function (healthCheckStatusSummaryDaily) {
+        /*
+         this.healthCheckStatusService.getHealthCheckStatusDetailByID(1)
+         .then(data => {
+         //this.healthCheckSummarys = data;
+         //this.setHealthCheckClass();
+         //this.healthCheckStatusSummaryDailys = data;
+
+         console.log(data);
+
+         //TODO: remove after testing.
+         this.selecthealthCheckStatusSummaryDaily(this.healthCheckStatusSummaryDailys[0]);
+         })
+         .catch((ex) => {
+         //Example console.log
+         console.log('Error fetching summary data:', ex);
+         });
+         this.selectedHealthCheckStatusSummaryDaily = healthCheckStatusSummaryDaily;
+         */
+        this.selectedHealthCheckStatusConfigID = healthCheckStatusSummaryDaily.configID;
     };
     return HealthCheckStatusSummaryDailyComponent;
 }());
@@ -44,9 +62,9 @@ HealthCheckStatusSummaryDailyComponent = __decorate([
         selector: 'health-check-status-summary-daily',
         templateUrl: '/app/healthCheckStatus/health-check-status-summary-daily.view.html',
         styleUrls: ['/app/healthCheckConfig/health-check-status.styles.css'],
-        providers: [health_check_status_summary_daily_service_1.HealthCheckStatusSummaryDailyService]
+        providers: [health_check_status_service_1.HealthCheckStatusService]
     }),
-    __metadata("design:paramtypes", [health_check_status_summary_daily_service_1.HealthCheckStatusSummaryDailyService])
+    __metadata("design:paramtypes", [health_check_status_service_1.HealthCheckStatusService])
 ], HealthCheckStatusSummaryDailyComponent);
 exports.HealthCheckStatusSummaryDailyComponent = HealthCheckStatusSummaryDailyComponent;
 //# sourceMappingURL=health-check-status-summary-daily.component.js.map

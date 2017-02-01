@@ -13,6 +13,10 @@ var AppComponent = (function () {
     function AppComponent() {
     }
     AppComponent.prototype.ngOnInit = function () {
+        this.routesEnabled = {
+            'config': true,
+            'summary': true
+        };
     };
     return AppComponent;
 }());

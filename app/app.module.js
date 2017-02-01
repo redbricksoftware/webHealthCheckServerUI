@@ -9,10 +9,17 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var app_component_1 = require("./app.component");
+var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var health_check_config_component_1 = require("./healthCheckConfig/health-check-config.component");
 var health_check_config_details_component_1 = require("./healthCheckConfig/health-check-config-details.component");
 var health_check_status_summary_daily_component_1 = require("./healthCheckStatus/health-check-status-summary-daily.component");
+var health_check_status_detail_component_1 = require("./healthCheckStatus/health-check-status-detail.component");
+var appRoutes = [
+    { path: 'healthCheckConfig', component: health_check_config_component_1.HealthCheckConfigComponent },
+    { path: '**', component: health_check_status_summary_daily_component_1.HealthCheckStatusSummaryDailyComponent }
+];
+//enableProdMode();
 var AppModule = (function () {
     function AppModule() {
     }
@@ -23,13 +30,15 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
-            http_1.HttpModule
+            http_1.HttpModule,
+            router_1.RouterModule.forRoot(appRoutes)
         ],
         declarations: [
             app_component_1.AppComponent,
             health_check_config_component_1.HealthCheckConfigComponent,
             health_check_config_details_component_1.HealthCheckDetailComponent,
-            health_check_status_summary_daily_component_1.HealthCheckStatusSummaryDailyComponent
+            health_check_status_summary_daily_component_1.HealthCheckStatusSummaryDailyComponent,
+            health_check_status_detail_component_1.HealthCheckStatusDetailComponent
         ],
         bootstrap: [app_component_1.AppComponent]
     })

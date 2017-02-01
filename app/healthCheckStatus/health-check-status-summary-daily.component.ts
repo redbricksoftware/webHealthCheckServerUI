@@ -1,19 +1,22 @@
 import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 
-import {HealthCheckStatusSummaryDailyService} from "./health-check-status-summary-daily.service";
+import {HealthCheckStatusService} from "./health-check-status.service";
 import {HealthCheckStatusSummaryDaily} from "../models/health-check-status-summary-daily.model";
+
+import {HealthCheckStatusDetailComponent} from "./health-check-status-detail.component";
+
 
 @Component({
     selector: 'health-check-status-summary-daily',
     templateUrl: '/app/healthCheckStatus/health-check-status-summary-daily.view.html',
     styleUrls: ['/app/healthCheckConfig/health-check-status.styles.css'],
-    providers: [HealthCheckStatusSummaryDailyService]
+    providers: [HealthCheckStatusService]
 })
 
 export class HealthCheckStatusSummaryDailyComponent implements OnInit {
 
-    constructor(private healthCheckStatusSummaryDailyService: HealthCheckStatusSummaryDailyService) {
+    constructor(private healthCheckStatusService: HealthCheckStatusService) {
     }
 
     ngOnInit(): void {
@@ -23,10 +26,11 @@ export class HealthCheckStatusSummaryDailyComponent implements OnInit {
     title = 'Health Check';
 
     healthCheckStatusSummaryDailys: HealthCheckStatusSummaryDaily[];
-    selectedHealthCheckStatusSummaryDaily: HealthCheckStatusSummaryDaily;
+    //selectedHealthCheckStatusSummaryDaily: HealthCheckStatusSummaryDaily;
+    selectedHealthCheckStatusConfigID: number;
 
     getConfig(): void {
-        this.healthCheckStatusSummaryDailyService.getHealthCheckConfig()
+        this.healthCheckStatusService.getHealthCheckStatusSummaryDaily()
             .then(data => {
                 //this.healthCheckSummarys = data;
                 //this.setHealthCheckClass();
@@ -35,7 +39,7 @@ export class HealthCheckStatusSummaryDailyComponent implements OnInit {
                 console.log(data);
 
                 //TODO: remove after testing.
-                this.selectHealthCheckConfig(this.healthCheckStatusSummaryDailys[0]);
+                //this.selecthealthCheckStatusSummaryDaily(this.healthCheckStatusSummaryDailys[0]);
             })
             .catch((ex) => {
                 //Example console.log
@@ -43,9 +47,27 @@ export class HealthCheckStatusSummaryDailyComponent implements OnInit {
             });
     }
 
-    selectHealthCheckConfig(healthCheckStatusSummaryDaily: HealthCheckStatusSummaryDaily): void {
+    selecthealthCheckStatusSummaryDaily(healthCheckStatusSummaryDaily: HealthCheckStatusSummaryDaily): void {
 
-        this.selectedHealthCheckStatusSummaryDaily = healthCheckStatusSummaryDaily;
+        /*
+         this.healthCheckStatusService.getHealthCheckStatusDetailByID(1)
+         .then(data => {
+         //this.healthCheckSummarys = data;
+         //this.setHealthCheckClass();
+         //this.healthCheckStatusSummaryDailys = data;
+
+         console.log(data);
+
+         //TODO: remove after testing.
+         this.selecthealthCheckStatusSummaryDaily(this.healthCheckStatusSummaryDailys[0]);
+         })
+         .catch((ex) => {
+         //Example console.log
+         console.log('Error fetching summary data:', ex);
+         });
+         this.selectedHealthCheckStatusSummaryDaily = healthCheckStatusSummaryDaily;
+         */
+        this.selectedHealthCheckStatusConfigID = healthCheckStatusSummaryDaily.configID;
 
     }
 }

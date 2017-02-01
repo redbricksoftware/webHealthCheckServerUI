@@ -1,8 +1,13 @@
 <div class="container">
 
+
     <h1>Health Check</h1>
+    <nav>
+        <a *ngIf="routesEnabled.config" routerLink="/healthCheckConfig" routerLinkActive="active">Health Check Config</a>
+        <a *ngIf="routesEnabled.summary" routerLink="/healthCheckStatusSummaryDailyComponent" routerLinkActive="active">Health Check Status Summary</a>
+    </nav>
+    <router-outlet></router-outlet>
 
-    <health-check-status-summary-daily>status summary daily</health-check-status-summary-daily>
-
-    <health-check-config>health check config</health-check-config>
 </div>
+
+

@@ -8,11 +8,15 @@
             <th>Average Ping Response</th>
             <th>Uptime Percent</th>
         </tr>
-        <tr *ngFor="let healthCheckStatusDaily of healthCheckStatusSummaryDailys">
-            <td>{{healthCheckStatusDaily.configID}}</td>
-            <td>{{healthCheckStatusDaily.date | date: 'yyyy-MM-dd'}}</td>
-            <td>{{healthCheckStatusDaily.averagePingResponseMS}} ms</td>
-            <td>{{healthCheckStatusDaily.uptimePercent}}%</td>
+        <tr *ngFor="let healthCheckStatusSummaryDaily of healthCheckStatusSummaryDailys" (click)="selecthealthCheckStatusSummaryDaily(healthCheckStatusSummaryDaily)" role="button">
+            <td>{{healthCheckStatusSummaryDaily.configID}}</td>
+            <td>{{healthCheckStatusSummaryDaily.date | date: 'yyyy-MM-dd'}}</td>
+            <td>{{healthCheckStatusSummaryDaily.averagePingResponseMS}} ms</td>
+            <td>{{healthCheckStatusSummaryDaily.uptimePercent}}%</td>
         </tr>
     </table>
+
+    <health-check-status-detail [selectedHealthCheckStatusConfigID]="selectedHealthCheckStatusConfigID">Health Check Status Deets
+    </health-check-status-detail>
+
 </div>

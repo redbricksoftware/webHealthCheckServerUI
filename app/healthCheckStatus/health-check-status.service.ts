@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import {HealthCheckStatusSummaryDaily} from "../models/health-check-status-summary-daily.model";
 
 @Injectable()
-export class HealthCheckStatusSummaryDailyService {
+export class HealthCheckStatusService {
 
     private healthCheckURI = 'http://localhost:3000/api/v1/';  // URL to web api
     private headers = new Headers();
@@ -14,15 +14,15 @@ export class HealthCheckStatusSummaryDailyService {
         this.headers.append('Content-Type', 'application/json');
     }
 
-    getHealthCheckConfig(): Promise<HealthCheckStatusSummaryDaily[]> {
+    getHealthCheckStatusSummaryDaily(): Promise<HealthCheckStatusSummaryDaily[]> {
         return this.http.get(this.healthCheckURI + 'HealthCheckSummaryDaily')
             .toPromise()
             .then(response => response.json() as HealthCheckStatusSummaryDaily[])
             .catch(this.handleError);
     }
 
-    getHealthCheckConfigByID(id: number): Promise<HealthCheckStatusSummaryDaily> {
-        return this.http.get(this.healthCheckURI + 'HealthCheckSummaryDaily/' + id)
+    getHealthCheckStatusDetailByID(id: number): Promise<HealthCheckStatusSummaryDaily> {
+        return this.http.get(this.healthCheckURI + 'HealthCheckDetails/' + id)
             .toPromise()
             .then(response => response.json() as HealthCheckStatusSummaryDaily)
             .catch(this.handleError);
