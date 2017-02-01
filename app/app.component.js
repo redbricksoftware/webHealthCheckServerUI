@@ -8,55 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var health_check_config_service_1 = require('./healthCheckConfig/health-check-config.service');
+var core_1 = require("@angular/core");
 var AppComponent = (function () {
-    function AppComponent(healthCheckConfigService) {
-        this.healthCheckConfigService = healthCheckConfigService;
-        this.title = 'Health Check';
+    function AppComponent() {
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.getConfig();
     };
-    AppComponent.prototype.getConfig = function () {
-        var _this = this;
-        this.healthCheckConfigService.getHealthCheckConfig()
-            .then(function (data) {
-            //this.healthCheckSummarys = data;
-            //this.setHealthCheckClass();
-            _this.healthCheckConfigs = data;
-            //TODO: remove after testing.
-            _this.selectHealthCheckConfig(_this.healthCheckConfigs[0]);
-        })
-            .catch(function (ex) {
-            //Example console.log
-            console.log('Error fetching summary data:', ex);
-        });
-    };
-    AppComponent.prototype.selectHealthCheckConfig = function (healthCheckConfig) {
-        /*
-         this.healthCheckConfigService.getHealthCheckConfigByID(healthCheckConfig.configID)
-         .then(data => {
-         this.selectedHealthCheckConfig = data;
-         console.log(this.selectedHealthCheckConfig);
-         })
-         .catch((ex) => {
-         //Example console.log
-         console.log('Error fetching summary data:', ex);
-         });
-         */
-        this.selectedHealthCheckConfig = healthCheckConfig;
-    };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'HealthCheck',
-            templateUrl: 'app/app.view.html',
-            styleUrls: ['app/app.styles.css'],
-            providers: [health_check_config_service_1.HealthCheckConfigService]
-        }), 
-        __metadata('design:paramtypes', [health_check_config_service_1.HealthCheckConfigService])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'HealthCheck',
+        templateUrl: 'app/app.view.html',
+        styleUrls: ['app/app.styles.css']
+    }),
+    __metadata("design:paramtypes", [])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

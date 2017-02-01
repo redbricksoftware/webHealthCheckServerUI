@@ -11,49 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var HealthCheckConfigService = (function () {
-    function HealthCheckConfigService(http) {
+var HealthCheckStatusSummaryDailyService = (function () {
+    function HealthCheckStatusSummaryDailyService(http) {
         this.http = http;
         this.healthCheckURI = 'http://localhost:3000/api/v1/'; // URL to web api
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
     }
-    HealthCheckConfigService.prototype.getHealthCheckConfig = function () {
-        return this.http.get(this.healthCheckURI + 'HealthCheckManagement')
+    HealthCheckStatusSummaryDailyService.prototype.getHealthCheckConfig = function () {
+        return this.http.get(this.healthCheckURI + 'HealthCheckSummaryDaily')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HealthCheckConfigService.prototype.getHealthCheckConfigByID = function (id) {
-        return this.http.get(this.healthCheckURI + 'HealthCheckManagement/' + id)
+    HealthCheckStatusSummaryDailyService.prototype.getHealthCheckConfigByID = function (id) {
+        return this.http.get(this.healthCheckURI + 'HealthCheckSummaryDaily/' + id)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HealthCheckConfigService.prototype.addHealthCheckConfig = function (config) {
-        return this.http.post(this.healthCheckURI + 'HealthCheckManagement/', config)
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
-    HealthCheckConfigService.prototype.updateHealthCheckConfig = function (config) {
-        console.log('this: ' + JSON.stringify(config));
-        console.log(this.headers);
-        var uri = this.healthCheckURI + 'HealthCheckManagement/' + config.configID;
-        return this.http.put(uri, config, { headers: this.headers })
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
-    HealthCheckConfigService.prototype.handleError = function (error) {
+    HealthCheckStatusSummaryDailyService.prototype.handleError = function (error) {
         //console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
-    return HealthCheckConfigService;
+    return HealthCheckStatusSummaryDailyService;
 }());
-HealthCheckConfigService = __decorate([
+HealthCheckStatusSummaryDailyService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], HealthCheckConfigService);
-exports.HealthCheckConfigService = HealthCheckConfigService;
-//# sourceMappingURL=health-check-config.service.js.map
+], HealthCheckStatusSummaryDailyService);
+exports.HealthCheckStatusSummaryDailyService = HealthCheckStatusSummaryDailyService;
+//# sourceMappingURL=health-check-status-summary-daily.service.js.map

@@ -5,8 +5,10 @@ import {AppComponent}  from './app.component';
 
 import {HttpModule}    from '@angular/http';
 
-import {HealthCheckComponent} from './config/health-check.component';
+import {HealthCheckConfigComponent} from "./healthCheckConfig/health-check-config.component";
 import {HealthCheckDetailComponent} from "./healthCheckConfig/health-check-config-details.component";
+import {HealthCheckStatusSummaryDailyComponent} from "./healthCheckStatus/health-check-status-summary-daily.component";
+
 
 @NgModule({
     imports: [
@@ -16,8 +18,9 @@ import {HealthCheckDetailComponent} from "./healthCheckConfig/health-check-confi
     ],
     declarations: [
         AppComponent,
-        HealthCheckComponent,
-        HealthCheckDetailComponent
+        HealthCheckConfigComponent,
+        HealthCheckDetailComponent,
+        HealthCheckStatusSummaryDailyComponent
     ],
     bootstrap: [AppComponent]
 })

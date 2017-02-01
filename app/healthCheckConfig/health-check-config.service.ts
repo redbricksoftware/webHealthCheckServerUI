@@ -25,14 +25,14 @@ export class HealthCheckConfigService {
     getHealthCheckConfigByID(id: number): Promise<HealthCheckConfig> {
         return this.http.get(this.healthCheckURI + 'HealthCheckManagement/' + id)
             .toPromise()
-            .then(response => response.json() as HealthCheckConfig[])
+            .then(response => response.json() as HealthCheckConfig)
             .catch(this.handleError);
     }
 
     addHealthCheckConfig(config: HealthCheckConfig): Promise<HealthCheckConfig> {
         return this.http.post(this.healthCheckURI + 'HealthCheckManagement/', config)
             .toPromise()
-            .then(response => response.json() as HealthCheckConfig[])
+            .then(response => response.json() as HealthCheckConfig)
             .catch(this.handleError);
     }
 
@@ -42,7 +42,7 @@ export class HealthCheckConfigService {
         let uri = this.healthCheckURI + 'HealthCheckManagement/' + config.configID;
         return this.http.put(uri, config, {headers: this.headers})
             .toPromise()
-            .then(response => response.json() as HealthCheckConfig[])
+            .then(response => response.json() as HealthCheckConfig)
             .catch(this.handleError);
     }
 
