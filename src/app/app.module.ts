@@ -8,6 +8,8 @@ import { ConfigComponent } from './config/config/config.component';
 import { ConfigDetailComponent } from './config/config-detail/config-detail.component';
 import { NotificationsComponent } from './notifications/notifications/notifications.component';
 import { MessagesComponent } from './messages/messages/messages.component';
+import { DropdownMessagesComponent } from './messages/dropdown-messages/dropdown-messages.component';
+import { DropdownNotificationsComponent } from './notifications/dropdown-notifications/dropdown-notifications.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { MessagesComponent } from './messages/messages/messages.component';
     ConfigComponent,
     ConfigDetailComponent,
     NotificationsComponent,
-    MessagesComponent
+    MessagesComponent,
+    DropdownMessagesComponent,
+    DropdownNotificationsComponent
   ],
   imports: [
     BrowserModule,

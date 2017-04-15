@@ -1,0 +1,22 @@
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+  <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+</a>
+<ul class="dropdown-menu dropdown-alerts">
+  <li *ngFor="let notification of notificationData">
+    <a href="#">
+      <div>
+        <i class="fa fa-fw" ngClass="{{notification.notificiationClass}}"></i> {{notification.notificationMessage}}
+        <span class="pull-right text-muted small">{{notification.howLongAgo}}</span>
+      </div>
+    </a>
+    <div class="divider"></div>
+  </li>
+  <li>
+    <a class="text-center" href="#">
+      <strong>See All Alerts</strong>
+      <i class="fa fa-angle-right"></i>
+    </a>
+  </li>
+</ul>
+
+

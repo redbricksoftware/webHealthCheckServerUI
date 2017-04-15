@@ -1,0 +1,23 @@
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+  <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+</a>
+<ul class="dropdown-menu dropdown-messages">
+  <li *ngFor="let message of messageData">
+    <a href="#">
+      <div>
+        <strong>{{message.from}}</strong>
+        <span class="pull-right text-muted">
+            <em>{{message.date}}</em>
+        </span>
+      </div>
+      <div>{{message.message}}</div>
+    </a>
+    <div class="divider"></div>
+  </li>
+  <li>
+    <a class="text-center" href="#">
+      <strong>See All Messages</strong>
+      <i class="fa fa-angle-right"></i>
+    </a>
+  </li>
+</ul>
