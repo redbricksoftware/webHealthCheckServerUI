@@ -1,0 +1,24 @@
+<p>
+  config works!
+</p>
+
+<table *ngIf="configData">
+  <tr>
+    <th>id</th>
+    <th>Enabled</th>
+    <th>Name</th>
+    <th>URI</th>
+    <th>Poll Frequency</th>
+    <th>Expected Response</th>
+  </tr>
+  <tr *ngFor="let config of configData" (click)="selectConfig(config)" role="button">
+    <td>{{config.id}}</td>
+    <td>{{config.enabled}}</td>
+    <td>{{config.name}}</td>
+    <td>{{config.protocol}}://{{config.uri}}:{{config.port}}</td>
+    <td>{{config.pollFrequencyInSeconds}} seconds</td>
+    <td>{{config.expectedResponseCode}}</td>
+  </tr>
+</table>
+
+<app-config-detail [configData]="selectedConfigData">Config Detail</app-config-detail>
