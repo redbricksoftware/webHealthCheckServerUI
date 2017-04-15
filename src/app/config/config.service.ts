@@ -11,17 +11,36 @@ export class ConfigService {
 
   constructor(private http: Http) {
     this.headers.append('Content-Type', 'application/json');
-  }
+  };
 
   getConfig(): Promise<Object[]> {
     return this.http.get(this.webHealthCheckBaseURI + 'config')
       .toPromise()
       .then(response => response.json() as Object[])
       .catch(this.handleError);
-  }
+  };
+
+  updateConfig(configID: number, config: Object): Promise<Object> {
+    return this.http.put(this.webHealthCheckBaseURI + 'config/' + configID, config)
+      .toPromise()
+      .then(response => response.json() as Object[])
+      .catch(this.handleError);
+  };
+
+  disableConfig(configID: number, enabled: boolean): Promise<boolean> {
+
+    console.log(enabled);
+    const config = {'enabled': !enabled};
+    console.log(config);
+
+    return this.http.patch(this.webHealthCheckBaseURI + 'config/' + configID, config)
+      .toPromise()
+      .then(response => true as boolean)
+      .catch(this.handleError);
+  };
 
   private handleError(error: any): Promise<any> {
     // console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
-  }
+  };
 }

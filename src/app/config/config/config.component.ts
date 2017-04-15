@@ -26,7 +26,7 @@ export class ConfigComponent implements OnInit {
         console.log(data);
 
         // TODO: remove after testing.
-        this.selectedConfigData = this.configData[0];
+        //this.selectedConfigData = this.configData[0];
       })
       .catch((ex) => {
         console.log('Error fetching summary data:', ex);

@@ -1,5 +1,76 @@
 <div *ngIf="configData">
-  config-detail works!
 
-  {{configData.name}}
+    {{configForm | json}}
+    <div class="col-lg-6">
+
+      <div class="form-group">
+        <label for="name">name</label>
+        <input class="form-control" id="name" name="name" [(ngModel)]="configData.name">
+      </div>
+
+      <div class="form-group">
+        <label for="degradedResponseTimeMS">failed response time (ms)</label>
+        <input class="form-control" id="degradedResponseTimeMS" name="degradedResponseTimeMS" [(ngModel)]="configData.degradedResponseTimeMS">
+      </div>
+
+      <div class="form-group">
+        <label for="failedResponseTimeMS">degraded response time (ms)</label>
+        <input class="form-control" id="failedResponseTimeMS" name="failedResponseTimeMS" [(ngModel)]="configData.failedResponseTimeMS">
+      </div>
+
+      <div class="form-group">
+        <label for="pollFrequencyInSeconds">polling frequency</label>
+        <input class="form-control" id="pollFrequencyInSeconds" name="pollFrequencyInSeconds" [(ngModel)]="configData.pollFrequencyInSeconds">
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="updateConfig(configData)">{{saving ? 'Saving...' : 'Save'}}</button>
+        <span *ngIf="saveSuccess">Save Successful</span>
+      </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+      <div class="form-group">
+        <label for="protocol">protocol</label>
+        <select class="form-control" id="protocol" name="protocol" class="form-control" [(ngModel)]="configData.protocol">
+          <option value="http">http</option>
+          <option value="https">https</option>
+          <option value="fto">ftp</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="uri">URI</label>
+        <input class="form-control" id="uri" name="uri" [(ngModel)]="configData.uri">
+      </div>
+
+      <div class="form-group">
+        <label for="port">port</label>
+        <input class="form-control" id="port" name="port" [(ngModel)]="configData.port">
+      </div>
+
+
+      <div class="form-group">
+        <label for="expectedResponseCode">expected response</label>
+        <select class="form-control" id="expectedResponseCode" name="expectedResponseCode" [(ngModel)]="configData.expectedResponseCode">
+          <option value="2XX">2XX</option>
+          <option value="3XX">3XX</option>
+          <option value="4XX">4XX</option>
+          <option value="200">200</option>
+          <option value="201">201</option>
+          <option value="202">202</option>
+          <option value="503">503</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-warning" (click)="disableConfig(configData)">{{configData.enabled ? 'Disable': 'Enable'}}</button>
+        <button class="btn btn-danger" disabled>Delete</button>
+      </div>
+
+    </div>
 </div>
+
+
