@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ConfigService} from '../config.service';
 
 @Component({
@@ -8,9 +8,12 @@ import {ConfigService} from '../config.service';
   providers: [ConfigService]
 })
 export class ConfigDetailComponent implements OnInit {
-  @Input() configData: any;
-  saving = false;
-  saveSuccess = false;
+  @Input() selectedConfigID: number;
+  @Output() onDetailSaved = new EventEmitter<boolean>();
+
+  configData: any;
+  // saving = false;
+  // saveSuccess = false;
 
   constructor(private configService: ConfigService) {
   }
@@ -19,45 +22,39 @@ export class ConfigDetailComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.saveSuccess = false;
+
+    this.configService.getSingleConfig(this.selectedConfigID)
+      .then((data) => {
+        this.configData = data;
+      })
+      .catch((err) => {
+        console.log(err);
+
+      });
   }
 
   updateConfig(config) {
-    console.log(config);
-
-    this.setSavingStatus();
 
     this.configService.updateConfig(config.id, config)
       .then((response) => {
-        this.setSavingStatus();
-        this.saveSuccess = true;
-        console.log(response);
+        this.onDetailSaved.emit(true);
       })
       .catch((err) => {
         console.log(err);
       });
+
   }
 
   disableConfig(config) {
-    console.log('disable');
-
-    this.setSavingStatus();
 
     this.configService.disableConfig(config.id, config.enabled)
       .then((response) => {
-        this.setSavingStatus();
-        this.saveSuccess = true;
-
-        this.configData.enabled = !this.configData.enabled;
-
-        console.log(response);
+        this.configData.enabled = !config.enabled;
+        this.onDetailSaved.emit(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  setSavingStatus(): void {
-    this.saving = !this.saving;
-  }
 }

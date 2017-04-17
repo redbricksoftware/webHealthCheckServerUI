@@ -14,11 +14,25 @@ export class ConfigService {
   };
 
   getConfig(): Promise<Object[]> {
-    return this.http.get(this.webHealthCheckBaseURI + 'config')
+    return this.http.get(this.webHealthCheckBaseURI + 'config/')
       .toPromise()
       .then(response => response.json() as Object[])
       .catch(this.handleError);
   };
+
+  getSingleConfig(configID: number): Promise<Object> {
+    return this.http.get(this.webHealthCheckBaseURI + 'config/' + configID)
+      .toPromise()
+      .then(response => response.json() as Object[])
+      .catch(this.handleError);
+  };
+
+  addConfig(config: Object): Promise<Object> {
+    return this.http.post(this.webHealthCheckBaseURI + 'config/', config)
+      .toPromise()
+      .then(response => response.json() as Object)
+      .catch(this.handleError);
+  }
 
   updateConfig(configID: number, config: Object): Promise<Object> {
     return this.http.put(this.webHealthCheckBaseURI + 'config/' + configID, config)
@@ -29,7 +43,6 @@ export class ConfigService {
 
   disableConfig(configID: number, enabled: boolean): Promise<boolean> {
 
-    console.log(enabled);
     const config = {'enabled': !enabled};
     console.log(config);
 

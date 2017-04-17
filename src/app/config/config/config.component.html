@@ -1,31 +1,17 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header">Dashboard</h1>
+    <h1 class="page-header">Dashboard
+      <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#addConfigModal">Add Configuration</button>
+    </h1>
   </div>
-  <!-- /.col-lg-12 -->
 </div>
+
 <div class="row">
-
-  <div class="col-lg-12" *ngIf="selectedConfigData">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-edit fa-fw"></i> {{selectedConfigData ? selectedConfigData.name : ''}}
-      </div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-        <app-config-detail [configData]="selectedConfigData">Config Detail</app-config-detail>
-      </div>
-      <!-- /.panel-body -->
-    </div>
-    <!-- /.panel -->
-
-  </div>
-  <!-- /.col-lg-4 -->
-
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-edit fa-fw"></i> Health Check List
+        <!--
         <div class="pull-right">
           <div class="btn-group">
             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -45,6 +31,7 @@
             </ul>
           </div>
         </div>
+        -->
       </div>
       <!-- /.panel-heading -->
       <div class="panel-body">
@@ -55,7 +42,9 @@
             <th>URI</th>
             <th>Poll Frequency</th>
           </tr>
-          <tr *ngFor="let config of configData" (click)="selectConfig(config)" role="button">
+          <tr *ngFor="let config of configData"
+              (click)="selectConfig(config)"
+              role="button" data-toggle="modal" data-target="#updateConfigModal">
             <td>{{config.enabled}}</td>
             <td>{{config.name}}</td>
             <td>{{config.protocol}}://{{config.uri}}:{{config.port}}</td>
@@ -66,7 +55,107 @@
       <!-- /.panel-body -->
     </div>
   </div>
-
 </div>
 
+
+<!-- Add New Config Modal -->
+<div class="modal fade" id="addConfigModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add New Config</h4>
+      </div>
+      <div class="modal-body">
+
+        <div style="height: 210px">
+          <div class="col-lg-4">
+
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input class="form-control" id="name" name="name" [(ngModel)]="newConfigData.name" tabindex="1">
+            </div>
+
+            <div class="form-group">
+              <label for="protocol">Protocol</label>
+              <select class="form-control" id="protocol" name="protocol" class="form-control"
+                      [(ngModel)]="newConfigData.protocol" tabindex="15">
+                <option value="http">http</option>
+                <option value="https">https</option>
+                <option value="ftp">ftp</option>
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <label for="degradedResponseTimeMS">Failed Response Time (ms)</label>
+              <input class="form-control" id="degradedResponseTimeMS" name="degradedResponseTimeMS"
+                     [(ngModel)]="newConfigData.degradedResponseTimeMS" tabindex="30">
+            </div>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="form-group">
+              <label for="pollFrequencyInSeconds">Polling Frequency</label>
+              <input class="form-control" id="pollFrequencyInSeconds" name="pollFrequencyInSeconds"
+                     [(ngModel)]="newConfigData.pollFrequencyInSeconds" tabindex="5">
+            </div>
+
+            <div class="form-group">
+              <label for="uri">URI</label>
+              <input class="form-control" id="uri" name="uri" [(ngModel)]="newConfigData.uri" tabindex="20">
+            </div>
+
+            <div class="form-group">
+              <label for="failedResponseTimeMS">degraded response time (ms)</label>
+              <input class="form-control" id="failedResponseTimeMS" name="failedResponseTimeMS"
+                     [(ngModel)]="newConfigData.failedResponseTimeMS" tabindex="35">
+            </div>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="form-group">
+              <label for="expectedResponseCode">expected response</label>
+              <select class="form-control" id="expectedResponseCode" name="expectedResponseCode"
+                      [(ngModel)]="newConfigData.expectedResponseCode" tabindex="10">
+                <option value="2XX">2XX</option>
+                <option value="3XX">3XX</option>
+                <option value="4XX">4XX</option>
+                <option value="200">200</option>
+                <option value="201">201</option>
+                <option value="202">202</option>
+                <option value="503">503</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="port">port</label>
+              <input class="form-control" id="port" name="port" [(ngModel)]="newConfigData.port" tabindex="25">
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addConfig(newConfigData)"
+                tabindex="40">Save
+          changes
+        </button>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>
+
+<!-- Add New Config Modal -->
+<div class="modal fade" id="updateConfigModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="display: none;">
+  <app-config-detail (onDetailSaved)="onDetailSaved($event)" [selectedConfigID]="selectedConfigID">Config Detail</app-config-detail>
+</div>
 

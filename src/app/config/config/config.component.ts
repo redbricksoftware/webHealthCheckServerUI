@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ConfigService} from '../config.service';
 
 @Component({
@@ -8,8 +8,19 @@ import {ConfigService} from '../config.service';
   providers: [ConfigService]
 })
 export class ConfigComponent implements OnInit {
+
   configData: Object[];
-  selectedConfigData: Object;
+  selectedConfigID: number;
+  newConfigData: Object = {
+    'name': 'New Config',
+    'protocol': 'https',
+    'uri': 'localhost',
+    'port': '443',
+    'degradedResponseTimeMS': '750',
+    'failedResponseTimeMS': '1500',
+    'pollFrequencyInSeconds': '900',
+    'expectedResponseCode': '2XX'
+  };
 
   constructor(private configService: ConfigService) {
   };
@@ -19,23 +30,36 @@ export class ConfigComponent implements OnInit {
   };
 
   getConfig(): void {
+    console.log('getConfig');
+    this.configData = null;
     this.configService.getConfig()
       .then(data => {
         this.configData = data;
-
-        console.log(data);
-
-        if(this.configData.length > 0) {
-          this.selectedConfigData = this.configData[0];
-        }
       })
       .catch((ex) => {
         console.log('Error fetching summary data:', ex);
       });
   };
 
+  addConfig(config): void {
+    this.configService.addConfig(config)
+      .then((data) => {
+      this.configData.push(data);
+        // this.getConfig();
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }
+
+  onDetailSaved(eventStatus: boolean): void {
+    console.log('event status: ' + eventStatus);
+    this.getConfig();
+  }
+
   selectConfig(config): void {
-    this.selectedConfigData = config;
-  };
+    this.selectedConfigID = config.id;
+  }
+  ;
 
 }
