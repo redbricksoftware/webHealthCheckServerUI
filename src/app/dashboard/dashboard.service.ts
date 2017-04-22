@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HealthCheckSummaryModel} from '../../models/healthCheckSummaryModel';
 import {Http} from '@angular/http';
 
+import * as moment from 'moment';
+
 import 'rxjs/add/operator/toPromise';
 import {HealthCheckDetailModel} from '../../models/healthCheckDetailModel';
 
@@ -14,15 +16,20 @@ export class DashboardService {
     this.headers.append('Content-Type', 'application/json');
   };
 
-  getHealthCheckSummaryDataLastSevenDays(): Promise<Array<HealthCheckSummaryModel>> {
-    return this.http.get(this.webHealthCheckBaseURI + 'healthCheckSummary?startDate=' + Date().toString())
+  getHealthCheckSummaryDataLastXDays(days: number): Promise<Array<HealthCheckSummaryModel>> {
+    const xDaysAgo = moment().add((-1 * days), 'days');
+
+    return this.http.get(this.webHealthCheckBaseURI + 'healthCheckSummary?startDate=' + xDaysAgo)
       .toPromise()
       .then(response => response.json() as Array<HealthCheckSummaryModel>)
       .catch(this.handleError);
   };
 
-  getHealthCheckDetailLast24Hours(): Promise<HealthCheckDetailModel> {
-    return this.http.get(this.webHealthCheckBaseURI + 'healthCheckDetail?startDate=' + Date().toString())
+  getHealthCheckDetailLastXHours(hours: number): Promise<Array<HealthCheckDetailModel>> {
+    const xHoursAgo = moment().add((-1 * hours), 'hours');
+
+
+    return this.http.get(this.webHealthCheckBaseURI + 'healthCheckDetail?startDate=' + xHoursAgo)
       .toPromise()
       .then(response => response.json() as Array<HealthCheckDetailModel>)
       .catch(this.handleError);
